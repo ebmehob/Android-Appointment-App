@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24sp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:paddingVertical="10sp"
+        android:text="Appointment" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="June, 2023 " />\
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/date_view"
+        android:layout_height="90sp"
+        android:layout_width="match_parent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20sp"
+        android:layout_marginTop="20sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Time slots" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/time_view"
+        android:layout_height="0dp"
+        android:layout_weight="1.25"
+        android:layout_width="match_parent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10sp"
+        android:layout_marginTop="20sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Information" />
+
+    <EditText
+        android:background="@drawable/back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10sp"
+        android:padding="10sp"
+        android:hint="Name" />
+
+    <EditText
+        android:background="@drawable/back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10sp"
+        android:hint="Phone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@drawable/bback"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="40sp"
+        android:text="Button" />
+
+
+
+
+
+</LinearLayout>
