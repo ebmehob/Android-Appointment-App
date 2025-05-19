@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 //Адаптер відображає дані згідно із масивом Стрічок
-class ItemAdapter(private val itemText: Array<String>) :
+class ItemAdapter(private val itemText: List<Appointment>) :
     RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     /**
@@ -15,11 +15,16 @@ class ItemAdapter(private val itemText: Array<String>) :
      * (custom ViewHolder)
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val itemView: TextView
+        val itemName: TextView
+        val itemTime: TextView
+        val itemNumber: TextView
 
         init {
 // тут можна визначити обробник подій для UI елементів ViewHolder
-            itemView = view.findViewById(R.id.itemText)
+            itemName = view.findViewById(R.id.itemText)
+            itemTime = view.findViewById(R.id.itemTime)
+            itemNumber = view.findViewById(R.id.itemNumber)
+
 
         }
     }
@@ -34,7 +39,10 @@ class ItemAdapter(private val itemText: Array<String>) :
     //Заміна вмісту View (викликається LayoutManager) - якщо ми перевикористовуємо елемент, то варто затерти старі дані і відобразити нові.
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 // Отримайте елемент зі свого набору даних для цій позиції елементу та оновіть дані цього елементу
-        viewHolder.itemView.text = itemText[position]
+        viewHolder.itemName.text = itemText[position].name
+        viewHolder.itemTime.text = itemText[position].time
+        viewHolder.itemNumber.text = itemText[position].phone
+
     }
     // розмір вашого набору даниx, щоб знати скільки елементів треба відобразити.
     override fun getItemCount() = itemText.size

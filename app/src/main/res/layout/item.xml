@@ -27,6 +27,7 @@
             android:layout_margin="3sp" />
 
         <TextView
+            android:id="@+id/itemTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -34,6 +35,7 @@
             android:layout_margin="3sp" />
 
         <TextView
+            android:id="@+id/itemNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"

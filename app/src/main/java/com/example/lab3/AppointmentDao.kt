@@ -10,6 +10,9 @@ interface AppointmentDao {
     @Query("SELECT * FROM APPOINTMENT")
     fun getAllAppointment() : List<Appointment>
 
+    @Query("SELECT * FROM APPOINTMENT where date = :date")
+    fun getAppointments(date: String) : List<Appointment>
+
     @Insert
     fun addAppointment(appointment: Appointment)
 

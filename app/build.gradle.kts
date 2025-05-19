@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.lab3"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -69,4 +69,11 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     // For control over item selection of both touch and mouse driven selection
     implementation(libs.androidx.recyclerview.selection)
+
+
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+// Retrofit with Scalar Converter
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 }

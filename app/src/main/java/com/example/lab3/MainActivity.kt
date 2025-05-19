@@ -39,8 +39,8 @@ class MainActivity : ComponentActivity() {
         }
 
 
-        createDB()
-        testDB()
+//        createDB()
+//        testDB()
     }
 
     lateinit var db: AppointmentDatabase
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun testDB(){
-        insert()
+//        insert()
         read()
         update()
         read()
