@@ -1,9 +1,11 @@
 package com.example.lab3
 
+import AppointmentApiService
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,21 +24,42 @@ class SecondScreen : ComponentActivity() {
         setContentView(binding.root)
 
 
-        val today = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-        Log.d("sho", "Formatted date: ${today.format(formatter)}")
-
         createDB()
-
-        val appointments = read("${today.format(formatter)}")
-
+        loadData()
 
 
-        val itemAdapter = ItemAdapter(appointments)
-        val itemrecyclerView: RecyclerView = findViewById(R.id.item_view)
-        itemrecyclerView.adapter = itemAdapter
-        itemrecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+//        val today = LocalDate.now()
+//        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+////        Log.d("sho", "Formatted date: ${today.format(formatter)}")
+
+//        val appointments = read("${today.format(formatter)}")
+
+
+
+//        val itemAdapter = ItemAdapter(appointments)
+//        val itemrecyclerView: RecyclerView = findViewById(R.id.item_view)
+//        itemrecyclerView.adapter = itemAdapter
+//        itemrecyclerView.layoutManager =
+//            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//
+
+
+
+//        binding.calendarView.setOnDateChangeListener {_, year, month, day ->
+//            val date = ("%02d".format(day) + "." + "%02d".format(month+1) + "." + "%04d".format(year))
+//
+//
+//            val appointments = read(date)
+//
+//            val itemAdapter = ItemAdapter(appointments)
+//            val itemrecyclerView: RecyclerView = findViewById(R.id.item_view)
+//            itemrecyclerView.adapter = itemAdapter
+//            itemrecyclerView.layoutManager =
+//                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//        }
+
+
 
         val toFirst: Button = findViewById(R.id.button2)
 
@@ -46,11 +69,63 @@ class SecondScreen : ComponentActivity() {
         }
 
 
+    }
+
+
+
+    private fun loadData() {
+        Log.d("API", "loadData")
+        val service = AppointmentApiService()
+        service.getLocalAppointments(object : AppointmentApiService.AppointmentCallback {
+            override fun onSuccess(apps: List<Appointment>) {
+                displayWeather(apps)
+            }
+            override fun onFailure() {
+                displayError()
+            }
+        })
+    }
+
+
+
+    private fun displayWeather(apps: List<Appointment>) {
+
+        val today = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+//        Log.d("sho", "Formatted date: ${today.format(formatter)}")
+
+        var appointments: List<Appointment> = emptyList()
+
+        for (a in apps){
+            if (a.date == "${today.format(formatter)}")
+                appointments = appointments + a
+        }
+
+//        val appointments = read("${today.format(formatter)}")
+
+        val itemAdapter = ItemAdapter(appointments)
+        val itemrecyclerView: RecyclerView = findViewById(R.id.item_view)
+        itemrecyclerView.adapter = itemAdapter
+        itemrecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+
+
+
+
+
         binding.calendarView.setOnDateChangeListener {_, year, month, day ->
+
             val date = ("%02d".format(day) + "." + "%02d".format(month+1) + "." + "%04d".format(year))
 
 
-            val appointments = read(date)
+            appointments = emptyList()
+
+            for (a in apps){
+                if (a.date == "$date")
+                    appointments = appointments + a
+            }
+
 
             val itemAdapter = ItemAdapter(appointments)
             val itemrecyclerView: RecyclerView = findViewById(R.id.item_view)
@@ -60,7 +135,34 @@ class SecondScreen : ComponentActivity() {
         }
 
 
+//        Log.d("API",
+//            "${weather.name}")
+//        Log.d("API",
+//            "${weather.time}")
+//        Log.d("API",
+//            "${weather.phone}")
     }
+
+
+
+
+    private fun displayError() {
+        Log.d("API", "error loading data")
+        Toast.makeText(MainActivity@ this, "R.string.failed_load_data",
+            Toast.LENGTH_LONG).show()
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     lateinit var db: AppointmentDatabase
 
@@ -68,7 +170,8 @@ class SecondScreen : ComponentActivity() {
         db = Room.databaseBuilder(
             applicationContext,
             AppointmentDatabase::class.java, "testDB"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries()
+            .build()
     }
 
 //    private fun testDB(){
@@ -84,10 +187,10 @@ class SecondScreen : ComponentActivity() {
         message("ins")
         val dao = db.getAppointmentDao()
 
-        var appointment = Appointment(1, "12.05.2025", "10:00", "John", "34551122")
-        dao.addAppointment(appointment)
-//        appointment = Appointment(2, "11.05.1925", "12:00", "Tyrion", "3455")
+//        var appointment = Appointment(1, "12.05.2025", "10:00", "John", "34551122")
 //        dao.addAppointment(appointment)
+        var appointment = Appointment(2, "11.05.2025", "12:00", "Tyrion", "3455")
+        dao.addAppointment(appointment)
 
 
     }
@@ -108,7 +211,7 @@ class SecondScreen : ComponentActivity() {
         message("del")
         val dao = db.getAppointmentDao()
 
-        dao.deleteAppointment(1)
+        dao.deleteAppointment(2)
 //        dao.deleteAppointment(2)
 //        dao.deleteAppointment(3)
 //        dao.deleteAppointment(4)
