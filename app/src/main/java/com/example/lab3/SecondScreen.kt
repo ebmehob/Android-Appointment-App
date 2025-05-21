@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.example.lab3.data.model.IDataSource
 import com.example.lab3.databinding.ActivityMainBinding
 import com.example.lab3.databinding.ScheduleBinding
 import java.time.LocalDate
@@ -76,9 +77,9 @@ class SecondScreen : ComponentActivity() {
     private fun loadData() {
         Log.d("API", "loadData")
         val service = AppointmentApiService()
-        service.getLocalAppointments(object : AppointmentApiService.AppointmentCallback {
+        service.getLocalAppointments(object : IDataSource.AppointmentCallback {
             override fun onSuccess(apps: List<Appointment>) {
-                displayWeather(apps)
+                displayAppointments(apps)
             }
             override fun onFailure() {
                 displayError()
@@ -88,7 +89,7 @@ class SecondScreen : ComponentActivity() {
 
 
 
-    private fun displayWeather(apps: List<Appointment>) {
+    private fun displayAppointments(apps: List<Appointment>) {
 
         val today = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
