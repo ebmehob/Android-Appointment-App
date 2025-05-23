@@ -1,14 +1,12 @@
-package com.example.lab3
+package com.example.lab3.uii
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab3.databinding.ItemBinding
-import com.example.lab3.databinding.ScheduleBinding
+import com.example.lab3.data.local.Appointment
+import com.example.lab3.R
 
 //Адаптер відображає дані згідно із масивом Стрічок
 class ItemAdapter(private val itemText: List<Appointment>) :
@@ -113,4 +111,3 @@ class ItemAdapter(private val itemText: List<Appointment>) :
 
 
 }
-

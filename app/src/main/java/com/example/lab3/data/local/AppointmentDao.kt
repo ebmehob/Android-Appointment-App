@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert

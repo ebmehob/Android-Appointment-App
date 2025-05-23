@@ -1,6 +1,5 @@
-package com.example.lab3
+package com.example.lab3.uii
 
-import AppointmentApiService
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,13 +9,17 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import com.example.lab3.data.model.IDataSource
-import com.example.lab3.databinding.ActivityMainBinding
+import com.example.lab3.data.local.Appointment
+import com.example.lab3.data.local.AppointmentDatabase
+import com.example.lab3.MainActivity
+import com.example.lab3.R
+import com.example.lab3.data.model.AppointmentApiService
 import com.example.lab3.databinding.ScheduleBinding
+import com.example.lab3.data.model.IDataSource
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class SecondScreen : ComponentActivity() {
+class SecondScreen : ComponentActivity(), SecondContract.View{
     private lateinit var binding: ScheduleBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +27,11 @@ class SecondScreen : ComponentActivity() {
         binding = ScheduleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var presenter: SecondContract.Presenter = SecondPresenter(this)
 
-        createDB()
-        loadData()
+//        createDB()
+//        loadData()
+        presenter.loadData()
 
 
 
@@ -74,22 +79,7 @@ class SecondScreen : ComponentActivity() {
 
 
 
-    private fun loadData() {
-        Log.d("API", "loadData")
-        val service = AppointmentApiService()
-        service.getLocalAppointments(object : IDataSource.AppointmentCallback {
-            override fun onSuccess(apps: List<Appointment>) {
-                displayAppointments(apps)
-            }
-            override fun onFailure() {
-                displayError()
-            }
-        })
-    }
-
-
-
-    private fun displayAppointments(apps: List<Appointment>) {
+    override fun displayAppointments(apps: List<Appointment>) {
 
         val today = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
@@ -109,8 +99,6 @@ class SecondScreen : ComponentActivity() {
         itemrecyclerView.adapter = itemAdapter
         itemrecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-
 
 
 
@@ -147,7 +135,7 @@ class SecondScreen : ComponentActivity() {
 
 
 
-    private fun displayError() {
+    override fun displayError() {
         Log.d("API", "error loading data")
         Toast.makeText(MainActivity@ this, "R.string.failed_load_data",
             Toast.LENGTH_LONG).show()
@@ -163,73 +151,74 @@ class SecondScreen : ComponentActivity() {
 
 
 
-
-
-    lateinit var db: AppointmentDatabase
-
-    private fun createDB(){
-        db = Room.databaseBuilder(
-            applicationContext,
-            AppointmentDatabase::class.java, "testDB"
-        ).allowMainThreadQueries()
-            .build()
-    }
-
-//    private fun testDB(){
-//        insert()
-//        read()
-//        update()
-//        read()
-//        delete()
-//        read()
+//
+//
+//    lateinit var db: AppointmentDatabase
+//
+//    private fun createDB(){
+//        db = Room.databaseBuilder(
+//            applicationContext,
+//            AppointmentDatabase::class.java, "testDB"
+//        ).allowMainThreadQueries()
+//            .build()
+//    }
+//
+////    private fun testDB(){
+////        insert()
+////        read()
+////        update()
+////        read()
+////        delete()
+////        read()
+////    }
+//
+//    fun insert(){
+//        message("ins")
+//        val dao = db.getAppointmentDao()
+//
+////        var appointment = Appointment(1, "12.05.2025", "10:00", "John", "34551122")
+////        dao.addAppointment(appointment)
+//        var appointment = Appointment(2, "11.05.2025", "12:00", "Tyrion", "3455")
+//        dao.addAppointment(appointment)
+//
+//
+//    }
+//
+//    fun read(date: String): List<Appointment> {
+//        val dao = db.getAppointmentDao()
+//
+//        val app = dao.getAppointments(date)
+//
+//        for (a in app) {
+//            message("$a")
+//        }
+//
+//        return app
+//    }
+//
+//    fun delete(){
+//        message("del")
+//        val dao = db.getAppointmentDao()
+//
+//        dao.deleteAppointment(2)
+////        dao.deleteAppointment(2)
+////        dao.deleteAppointment(3)
+////        dao.deleteAppointment(4)
+//
+//    }
+//
+//    fun update(){
+//        message("upd")
+//        val dao = db.getAppointmentDao()
+//
+//        val appointment = Appointment(1, "13.05.2025", "12:00", "John", "1111111111")
+//
+//        dao.updateAppointment(appointment)
+//    }
+//
+//
+//    fun message(m: String){
+//        Log.d("Test", m)
 //    }
 
-    fun insert(){
-        message("ins")
-        val dao = db.getAppointmentDao()
-
-//        var appointment = Appointment(1, "12.05.2025", "10:00", "John", "34551122")
-//        dao.addAppointment(appointment)
-        var appointment = Appointment(2, "11.05.2025", "12:00", "Tyrion", "3455")
-        dao.addAppointment(appointment)
-
-
-    }
-
-    fun read(date: String): List<Appointment> {
-        val dao = db.getAppointmentDao()
-
-        val app = dao.getAppointments(date)
-
-        for (a in app) {
-            message("$a")
-        }
-
-        return app
-    }
-
-    fun delete(){
-        message("del")
-        val dao = db.getAppointmentDao()
-
-        dao.deleteAppointment(2)
-//        dao.deleteAppointment(2)
-//        dao.deleteAppointment(3)
-//        dao.deleteAppointment(4)
-
-    }
-
-    fun update(){
-        message("upd")
-        val dao = db.getAppointmentDao()
-
-        val appointment = Appointment(1, "13.05.2025", "12:00", "John", "1111111111")
-
-        dao.updateAppointment(appointment)
-    }
-
-
-    fun message(m: String){
-        Log.d("Test", m)
-    }
 }

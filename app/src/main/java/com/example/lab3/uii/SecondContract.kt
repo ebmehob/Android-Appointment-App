@@ -1,6 +1,6 @@
 package com.example.lab3.uii
 
-import com.example.lab3.Appointment
+import com.example.lab3.data.local.Appointment
 
 interface SecondContract {
     interface View {

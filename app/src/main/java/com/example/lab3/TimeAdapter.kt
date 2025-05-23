@@ -52,4 +52,9 @@ class TimeAdapter(private val context: Context, private val timeText: Array<Stri
     }
     // розмір вашого набору даниx, щоб знати скільки елементів треба відобразити.
     override fun getItemCount() = timeText.size
+
+    fun getSelectedTime(): String {
+        return timeText.getOrNull(selectedPosition) ?: ""
+    }
+
 }

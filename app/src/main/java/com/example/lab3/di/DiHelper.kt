@@ -1,6 +1,6 @@
 package com.example.lab3.di
 
-import AppointmentApiService
+import com.example.lab3.data.model.AppointmentApiService
 import com.example.lab3.data.model.IDataSource
 import com.example.lab3.data.api.RetrofitApiHelper
 import com.example.lab3.uii.SecondContract

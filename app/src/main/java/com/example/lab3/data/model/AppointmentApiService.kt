@@ -1,13 +1,12 @@
-import com.example.lab3.Appointment
-import com.example.lab3.AppointmentApi
+package com.example.lab3.data.model
+
+import com.example.lab3.data.local.Appointment
+import com.example.lab3.data.api.AppointmentApi
 import com.example.lab3.Wrapper
 import com.example.lab3.data.api.RetrofitApiHelper
-import com.example.lab3.data.model.IDataSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.example.lab3.di.DiHelper
-
 
 class AppointmentApiService : IDataSource {
 
@@ -18,7 +17,8 @@ class AppointmentApiService : IDataSource {
     override fun getLocalAppointments(callback: IDataSource.AppointmentCallback) {
         api.getAppointments(SECRET_KEY).enqueue(object : Callback<Wrapper> {
             override fun onResponse(call: Call<Wrapper>, response:
-            Response<Wrapper>) {
+            Response<Wrapper>
+            ) {
                 if (response.code() == 200 && response.body() != null)
                     callback.onSuccess(response.body()!!.record)
                 else
