@@ -1,5 +1,6 @@
 package com.example.lab3.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -8,7 +9,7 @@ import androidx.room.Update
 @Dao
 interface AppointmentDao {
     @Query("SELECT * FROM APPOINTMENT")
-    fun getAllAppointment() : List<Appointment>
+    fun getAllAppointment() : LiveData<List<Appointment>>
 
     @Query("SELECT * FROM APPOINTMENT where date = :date")
     fun getAppointments(date: String) : List<Appointment>
@@ -21,4 +22,7 @@ interface AppointmentDao {
 
     @Update
     fun updateAppointment(appointment: Appointment)
+
+    @Query("SELECT * FROM Appointment WHERE date = :date")
+    fun getAppointmentsLive(date: String): LiveData<List<Appointment>>
 }

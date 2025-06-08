@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     android:padding="15sp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:paddingTop="10sp"
+        android:gravity="center"
+        android:text="Calendar" />
+
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="wrap_content"

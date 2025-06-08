@@ -10,16 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 //Адаптер відображає дані згідно із масивом Стрічок
 class CustomAdapter(private val context: Context, private val dayText: Array<String>, private val dayNumb: Array<String>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+
     private var selectedPosition = RecyclerView.NO_POSITION
 
-    /**
-     * Створено власну реалізацію типу ViewHolder. У цьому випадку це тільки 1
-    текстовий елемент.
-     * (custom ViewHolder)
-     */
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
         val numbView: TextView
+
         init {
 // тут можна визначити обробник подій для UI елементів ViewHolder
             textView = view.findViewById(R.id.dayText)
@@ -41,6 +39,7 @@ class CustomAdapter(private val context: Context, private val dayText: Array<Str
             }
         }
     }
+
 // Створення нових View (викликається LayoutManager). На початку роботи у пам”яті відсутні елементи, які можна перевикористовувати. Тому вони генеруються тут.
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int):
             ViewHolder {
@@ -49,6 +48,7 @@ class CustomAdapter(private val context: Context, private val dayText: Array<Str
             .inflate(R.layout.text_row_item, viewGroup, false)
         return ViewHolder(view)
     }
+
 //Заміна вмісту View (викликається LayoutManager) - якщо ми перевикористовуємо елемент, то варто затерти старі дані і відобразити нові.
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 // Отримайте елемент зі свого набору даних для цій позиції елементу та оновіть дані цього елементу
@@ -58,6 +58,7 @@ class CustomAdapter(private val context: Context, private val dayText: Array<Str
     viewHolder.itemView.background = ContextCompat.getDrawable(context,
         if (position == selectedPosition) R.drawable.backselected else R.drawable.back)
 }
+
 // розмір вашого набору даниx, щоб знати скільки елементів треба відобразити.
     override fun getItemCount() = dayText.size
 

@@ -22,7 +22,7 @@
             android:textSize="30sp"
             android:textStyle="bold"
             android:paddingVertical="10sp"
-            android:text="Appointment" />
+            android:text="New appointment" />
 
     </LinearLayout>
 
@@ -32,7 +32,7 @@
         android:paddingVertical="10sp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="June, 2023 " />\
+        android:text="June, 2025 " />\
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -95,7 +95,7 @@
         android:background="@drawable/bback"
         android:layout_gravity="bottom"
         android:layout_marginBottom="40sp"
-        android:text="Button" />
+        android:text="Save" />
 
 
 

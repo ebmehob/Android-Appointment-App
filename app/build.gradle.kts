@@ -69,15 +69,4 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     // For control over item selection of both touch and mouse driven selection
     implementation(libs.androidx.recyclerview.selection)
-
-
-
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-// Retrofit with Scalar Converter
-    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
-    implementation ("com.google.code.gson:gson:2.8.6")
 }
