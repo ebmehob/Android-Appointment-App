@@ -1,4 +1,4 @@
-package com.example.lab3.uii
+package com.example.lab3.appointments
 
 import android.view.LayoutInflater
 import android.view.View

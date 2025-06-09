@@ -31,4 +31,8 @@ class AppointmentViewModel(application: Application): AndroidViewModel(applicati
         return repository.getAppointmentsLive(date)
     }
 
+    fun getAllAppointments(): LiveData<List<Appointment>> {
+        return repository.getAllAppointments()
+    }
+
 }

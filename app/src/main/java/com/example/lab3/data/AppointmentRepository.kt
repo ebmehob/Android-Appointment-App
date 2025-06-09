@@ -1,6 +1,7 @@
 package com.example.lab3.data
 
 import androidx.lifecycle.LiveData
+import com.example.lab3.App
 import com.example.lab3.data.local.Appointment
 import com.example.lab3.data.local.AppointmentDao
 
@@ -11,8 +12,8 @@ class AppointmentRepository (private val appointmentDao: AppointmentDao) {
         appointmentDao.addAppointment(appointment)
     }
 
-    suspend fun getAppointments(date: String) : List<Appointment>{
-        return appointmentDao.getAppointments(date)
+    fun getAllAppointments() : LiveData<List<Appointment>>{
+        return appointmentDao.getAllAppointment()
     }
 
 

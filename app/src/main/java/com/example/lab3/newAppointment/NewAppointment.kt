@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.newAppointment
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lab3.R
 import com.example.lab3.data.local.Appointment
-import com.example.lab3.uii.Appointments
+import com.example.lab3.appointments.Appointments
 import com.example.roomapp.data.AppointmentViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

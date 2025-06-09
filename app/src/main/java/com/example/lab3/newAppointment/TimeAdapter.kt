@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.newAppointment
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lab3.R
+
 //Адаптер відображає дані згідно із масивом Стрічок
 class TimeAdapter(private val context: Context, private val timeText: Array<String>) :
     RecyclerView.Adapter<TimeAdapter.ViewHolder>() {
