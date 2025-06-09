@@ -5,55 +5,48 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab3.data.local.Appointment
 import com.example.lab3.R
+import com.example.lab3.data.local.Appointment
 
-//Адаптер відображає дані згідно із масивом Стрічок
-class  ItemAdapter(private var items: List<Appointment>) :
+class ItemAdapter(private var items: List<Appointment>,
+                  private val onLongClick: (Appointment) -> Unit) :
     RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val itemName: TextView
-        val itemTime: TextView
-        val itemNumber: TextView
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val itemName: TextView = view.findViewById(R.id.itemText)
+        val itemTime: TextView = view.findViewById(R.id.itemTime)
+        val itemNumber: TextView = view.findViewById(R.id.itemNumber)
 
         init {
-// тут можна визначити обробник подій для UI елементів ViewHolder
-            itemName = view.findViewById(R.id.itemText)
-            itemTime = view.findViewById(R.id.itemTime)
-            itemNumber = view.findViewById(R.id.itemNumber)
-
-
+            itemView.setOnLongClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onLongClick(items[position])
+                }
+                true
+            }
         }
     }
 
-
-    // Створення нових View (викликається LayoutManager). На початку роботи у пам”яті відсутні елементи, які можна перевикористовувати. Тому вони генеруються тут.
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int):
-            ViewHolder {
-// Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item, viewGroup, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item, parent, false)
         return ViewHolder(view)
     }
 
-
-    //Заміна вмісту View (викликається LayoutManager) - якщо ми перевикористовуємо елемент, то варто затерти старі дані і відобразити нові.
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-// Отримайте елемент зі свого набору даних для цій позиції елементу та оновіть дані цього елементу
-        viewHolder.itemName.text = items[position].name
-        viewHolder.itemTime.text = items[position].time
-        viewHolder.itemNumber.text = items[position].phone
-
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val appointment = items[position]
+        holder.apply {
+            itemName.text = appointment.name
+            itemTime.text = appointment.time
+            itemNumber.text = appointment.phone
+        }
     }
+
+    override fun getItemCount(): Int = items.size
 
     fun updateItems(newItems: List<Appointment>) {
-        this.items = newItems
+        items = newItems
         notifyDataSetChanged()
     }
-
-    // розмір вашого набору даниx, щоб знати скільки елементів треба відобразити.
-    override fun getItemCount() = items.size
-
-
 }

@@ -1,12 +1,14 @@
 package com.example.roomapp.data
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.lab3.data.AppointmentRepository
 import com.example.lab3.data.local.Appointment
 import com.example.lab3.data.local.AppointmentDatabase
+import com.example.lab3.data.remote.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -17,7 +19,7 @@ class AppointmentViewModel(application: Application): AndroidViewModel(applicati
 
     init {
         val userDao = AppointmentDatabase.getDatabase(application).getAppointmentDao()
-        repository = AppointmentRepository(userDao)
+        repository = AppointmentRepository(userDao, RetrofitInstance.api)
         readAllData = repository.readAllData
     }
 
@@ -35,4 +37,21 @@ class AppointmentViewModel(application: Application): AndroidViewModel(applicati
         return repository.getAllAppointments()
     }
 
+    fun deleteAppointment(appointment: Appointment) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAppointment(appointment)
+        }
+    }
+
+
+    fun refreshFromServer() {
+        viewModelScope.launch {
+            try {
+                repository.refreshAppointmentsFromRemote()
+                Log.e("ViewModel", "Refreshed from server")
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Failed to refresh from server", e)
+            }
+        }
+    }
 }

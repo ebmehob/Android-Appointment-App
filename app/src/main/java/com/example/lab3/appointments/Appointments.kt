@@ -1,5 +1,6 @@
 package com.example.lab3.appointments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,7 +19,6 @@ class Appointments : ComponentActivity() {
     private lateinit var itemAdapter: ItemAdapter
     private var fullAppointmentList: List<Appointment> = emptyList()
 
-//    private lateinit var viewModel: SecondViewModel
     private lateinit var viewModel: AppointmentViewModel
 
 
@@ -31,9 +31,22 @@ class Appointments : ComponentActivity() {
         // Init ViewModel
         viewModel = ViewModelProvider(this).get(AppointmentViewModel::class.java)
 
+        viewModel.refreshFromServer()
 
         // Init RecyclerView
-        itemAdapter = ItemAdapter(emptyList())
+        itemAdapter = ItemAdapter(emptyList()) { appointment ->
+            // Show confirmation dialog before deletion
+            AlertDialog.Builder(this)
+                .setTitle("Delete Appointment")
+                .setMessage("Do you really want to delete the appointment?")
+                .setPositiveButton("Yes") { _, _ ->
+                    viewModel.deleteAppointment(appointment)
+                }
+                .setNegativeButton("No", null)
+                .show()
+        }
+
+
         binding.itemView.adapter = itemAdapter
         binding.itemView.layoutManager = LinearLayoutManager(this)
 
